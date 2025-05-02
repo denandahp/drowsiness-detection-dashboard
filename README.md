@@ -17,17 +17,6 @@
    ```
    pip install -r requirements.txt
    ```
-4. Migrate the app to create database table advertisements and publisher
-
-   ```
-   python .\manage.py migrate publishers
-   python .\manage.py migrate advertisements  
-   ```
-5. Migrate the app to create view table from unmanaged model DenormalizedAdvertisement
-
-   ```
-   python .\manage.py migrate advertisement_views
-   ```
 
 ##### 2. Launch the apps
 
