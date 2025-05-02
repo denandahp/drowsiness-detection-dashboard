@@ -1,0 +1,60 @@
+{% load static %}
+
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+  <div class="app-brand mb-4 demo justify-content-center">
+    <img src='{% static "assets/images/logo-siwagrha.png" %}' alt="Logo" style="width: 70%;" />
+
+    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+      <i class="bx bx-chevron-left bx-sm align-middle"></i>
+    </a>
+  </div>
+
+  <div class="menu-inner-shadow"></div>
+
+  <ul class="menu-inner py-1">
+    <!-- Dashboard -->
+    <li class="menu-item {% if active_tab == 'dashboard' %}active{% endif %}">
+      <a href="{% url 'dashboards:index' %}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+        <div data-i18n="Analytics">Dashboard</div>
+      </a>
+    </li>
+
+    <li class="menu-item {% if active_tab == 'monitor' %}active{% endif %} d-none">
+      <a href="{% url 'dashboards:monitor_dashboard' %}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+        <div data-i18n="Analytics">Monitoring</div>
+      </a>
+    </li>
+    <li class="menu-item {% if active_tab == 'cameras' %}active{% endif %}">
+      <a href="{% url 'dashboards:cameras:index' %}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-camera"></i>
+        <div>Cameras</div>
+      </a>
+    </li>
+
+    <!-- RAW DATA -->
+    <li class="menu-header small text-uppercase">
+      <span class="menu-header-text">MENU</span>
+    </li>
+    <!-- Video -->
+    <li class="menu-item {% if active_tab == 'file' %}active open{% endif %}">
+      <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+        <div data-i18n="Account Settings">Files</div>
+      </a>
+      <ul class="menu-sub">
+        <li class="menu-item {% if active_sub_tab == 'recordingFile' %}active{% endif %}">
+          <a href="{% url 'dashboards:files:index' %}" class="menu-link">
+            <div data-i18n="Account">Recording Files</div>
+          </a>
+        </li>
+        <li class="menu-item {% if active_sub_tab == 'liveStreaming' %}active{% endif %}">
+          <a href="{% url 'dashboards:files:index_livestreaming' %}" class="menu-link">
+            <div data-i18n="Account">Live streaming</div>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</aside>

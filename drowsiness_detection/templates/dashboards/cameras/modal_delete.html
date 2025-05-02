@@ -1,0 +1,29 @@
+<div class="modal fade" id="id-delete-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content text-center">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <i class='bx bxs-error mb-2' style='font-size:80px;color:red'></i>
+        <h2 class="fw-bold">DELETE FILE</h2>
+        <p class="text-wrap">
+          You're going to delete file "<span class="fw-bolder">{{data.name}}</span>". Are you sure?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <a href="{% url 'dashboards:cameras:delete_cameras' id=data.id %}">
+          <button class="btn btn-outline-secondary">Delete</button>
+        </a>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

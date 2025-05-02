@@ -1,0 +1,86 @@
+{% extends "layout/base.html" %}
+{% load static_files %}
+
+{% block title %}
+    Detail {{ title }}
+{% endblock %}
+
+{% block content %}
+  {% if refresh_page != 0 %}
+    <meta http-equiv="refresh" content="0">
+  {% endif %}
+  <div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <div class="card-group mb-2">
+        {% for data in datas %}
+          <div class="col-lg-6 mb-3 ">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">{{data.name}}</h5>
+                <h6 class="card-subtitle text-muted">{{data.description|default:''}}</h6>
+                <div class="embed-responsive embed-responsive-1by1">
+                  <iframe class="embed-responsive-item w-100" height="250" src='{{ data.url|default:'' }}' allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="card mb-4">
+        <div class="col-lg">
+          <div class="row g-0">
+            <div class="col-md-8">
+              <div id="map"></div>
+            </div>
+            <div class="col-md-4">
+              <div class="card-body">
+                <h5 class="card-title">Camera 1</h5>
+                <p class="card-text">Lokasi camera 1 berada di lokasi ini</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="text-nowrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th> 
+                <th>Created</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+              {% if not objects %}
+                <tr>
+                    <td class="text-center" colspan="4">Tidak ada data pada tabel</td>
+                </tr>
+              {% else %}
+                {% for data in objects %}        
+                <tr>
+                    <td><a href="{% url 'dashboards:files:detail_files' id=data.id %}">{{ data.name }}</a></td>
+                    <td>{{ data.updated }}</td>
+                    <td>{{ data.get_type_display }}</td>
+                </tr>
+                {% endfor %}
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Content -->
+  <div class="content-backdrop fade"></div>
+  <script type="text/javascript">
+    var map = L.map('map').setView([-7.7538197, 110.3706827], 17);
+    L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3']
+    }).addTo(map);
+    var marker = L.marker([-7.7538197, 110.3706827]).addTo(map);
+    marker.bindPopup("<b>Camera 1</b>").openPopup();
+  </script>
+{% endblock %}

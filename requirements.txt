@@ -1,0 +1,27 @@
+Django==3.2
+django-extensions==3.0.9
+django-model-utils==4.3.1
+djangorestframework==3.12.4
+phonenumbers==8.12.20
+pillow==10.2.0
+
+Faker==16.6.0
+fontawesomefree==6.5.1
+ipdb==0.13.7 
+twilio==9.0.0
+
+psycopg2-binary==2.9.5
+python-decouple==3.8
+python-dotenv==1.0.1
+
+requests==2.25.1
+responses==0.13.1
+
+whitenoise==6.6.0
+
+opencv-python==4.9.0.80
+
+# google library
+google-api-python-client==2.120.0
+google-auth-httplib2==0.2.0
+google-auth-oauthlib==1.2.0

@@ -1,0 +1,73 @@
+{% extends "layout/base.html" %}
+
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+  <div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">{{ active_sub_tab|title }} /</span> {{ title }}</h4>
+        <!-- Form controls -->
+        <div class="col-12">
+          <div class="card">
+            <h5 class="card-header">Form Controls</h5>
+            <div class="card-body demo-vertical-spacing demo-only-element">
+              <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                    {% include "partials/form_field.html" with field=field %}
+                {% endfor %}
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">{{ process }}</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!-- / Content -->
+    <div class="content-backdrop fade"></div>
+    <!-- Contet Javascript -->
+
+    <script type="text/javascript">
+      const activeSubTab = '{{active_sub_tab}}'
+      const url = document.getElementById('id-form-url')
+      const gdriveId = document.getElementById('id-form-google_drive_id')
+      const files = document.getElementById('id-form-file')
+
+      // Initialize the form, default type 'File'
+      if (activeSubTab !== 'liveStreaming') url.classList.add('d-none')
+      gdriveId.classList.add('d-none')
+      
+      // Case for type selection
+      const type = document.getElementById('id-type')
+      type.addEventListener('change', function() {
+        if (this.value === "{{ typeList.file }}") {
+          url.classList.add('d-none')
+          gdriveId.classList.add('d-none')
+
+          document.getElementById('id-url').value = ''
+          document.getElementById('id-google_drive_id').value = ''
+
+          files.classList.remove('d-none')
+
+          document.getElementById('id-helptext-gdriveid').remove()
+          gdriveId.required = false
+        } else {
+          files.classList.add('d-none')
+          document.getElementById('id-file').value = ''
+
+          url.classList.remove('d-none')
+          gdriveId.classList.remove('d-none')
+          gdriveId.required = true
+        }
+        
+      })
+    </script>
+  </div>
+{% endblock %}

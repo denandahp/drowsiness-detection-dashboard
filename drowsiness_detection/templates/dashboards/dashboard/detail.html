@@ -1,0 +1,145 @@
+{% extends "layout/base.html" %}
+{% load static %}
+{% load static_files %}
+{% load querystring %}
+
+{% block title %}
+    Detail {{ title }}
+{% endblock %}
+
+{% block content %}
+  {% if refresh_page != 0 %}
+    <meta http-equiv="refresh" content="0">
+  {% endif %}
+  <div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <div class="card mb-4">
+        <h5 class="card-header m-0 me-2 pb-3">Total Freq Alert</h5>
+        <div id="charts"></div>
+      </div>
+      <div class="card mb-4">
+        <div class="col-lg">
+          <div class="row g-0">
+            <div class="col-md-8">
+              <div id="map"></div>
+            </div>
+            <div class="col-md-4">
+              <div class="card-body">
+                <h5 class="card-title">Camera 1</h5>
+                <p class="card-text">Lokasi camera 1 berada di lokasi ini</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Content -->
+  <div class="content-backdrop fade"></div>
+  <script type="text/javascript">
+    let cardColor, headingColor, axisColor, shadeColor, borderColor;
+
+    cardColor = config.colors.white;
+    headingColor = config.colors.headingColor;
+    axisColor = config.colors.axisColor;
+    borderColor = config.colors.borderColor;
+    statistikFreqAlert()
+    
+    // Freq Alert Chart - Area chart
+    // --------------------------------------------------------------------
+    function statistikFreqAlert() {
+      const xAxis = JSON.parse('{{statistikData|get:"xAxis"}}')
+      const maxYAxis = Math.max(xAxis)
+      const yAxis = "{{statistikData|get:'yAxis'|safe}}".replace(/\[|\]|\'/g,'').split(', ')
+      const incomeChartEl = document.querySelector('#charts'),
+        incomeChartConfig = {
+          series: [
+            {
+              name: 'Freq Alert',
+              data: [31, 40, 28, 51, 42, 109, 100]
+            }
+          ],
+          chart: {
+            height: 215,
+            parentHeightOffset: 0,
+            parentWidthOffset: 0,
+            toolbar: {
+              show: false
+            },
+            type: 'area'
+          },
+          dataLabels: {
+            enabled: false
+          },
+          stroke: {
+            width: 2,
+            curve: 'smooth'
+          },
+          markers: {
+            size: 6,
+            strokeWidth: 4,
+            colors: 'transparent',
+            strokeColors: 'transparent',
+            discrete: [
+              {
+                fillColor: config.colors.white,
+                seriesIndex: 0,
+                dataPointIndex: 7,
+                strokeColor: config.colors.primary,
+                strokeWidth: 2,
+                size: 6,
+                radius: 8
+              }
+            ],
+            hover: {
+              size: 7
+            }
+          },
+          colors: [config.colors.primary],
+          fill: {
+            type: 'gradient',
+            gradient: {
+              shade: shadeColor,
+              shadeIntensity: 0.6,
+              opacityFrom: 0.5,
+              opacityTo: 0.25,
+              stops: [0, 95, 100]
+            }
+          },
+          grid: {
+            borderColor: borderColor,
+            strokeDashArray: 5
+          },
+          xaxis: {
+            type: 'datetime',
+            categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"],
+            labels: {
+              show: true,
+              style: {
+                fontSize: '13px',
+                colors: axisColor
+              }
+            }
+          },
+          yaxis: {
+            max: 120,
+            tickAmount: 5
+          }
+        };
+      if (typeof incomeChartEl !== undefined && incomeChartEl !== null) {
+        const incomeChart = new ApexCharts(incomeChartEl, incomeChartConfig);
+        incomeChart.render();
+      }
+    }
+
+    // MAP
+    var map = L.map('map').setView([-7.7538197, 110.3706827], 17);
+      L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+          maxZoom: 20,
+          subdomains:['mt0','mt1','mt2','mt3']
+      }).addTo(map);
+      var marker = L.marker([-7.7538197, 110.3706827]).addTo(map);
+      marker.bindPopup("<b>Camera 1</b>").openPopup();
+  </script>
+{% endblock %}

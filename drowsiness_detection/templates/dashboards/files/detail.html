@@ -1,0 +1,89 @@
+{% extends "layout/base.html" %}
+
+{% block title %}
+    Detail {{ title }}
+{% endblock %}
+
+{% block content %}
+  <div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <div class="page-title mb-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <h4 class="fw-bold py-3 mb-0"><span class="text-muted fw-light">Tables / </span>Detail {{ title }}</h4>
+            <a href="{% url 'dashboards:files:edit_files' id=data.id %}">
+              <button class="btn btn-primary mx-1"><em class="fa fa-plus me-2"></em>Edit {{ title }}</button>
+            </a>
+        </div>
+      </div>
+      
+      <div class="card overflow-hidden mb-4">
+        <h5 class="card-header">{{ data.name }}</h5>
+        {% if data.url %}
+            <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item resize-video"
+                    src={{ data.url|default:'' }} allowfullscreen></iframe>
+            </div>
+        {% else %}
+            <video class="resize-video" controls autoplay>
+                <source src="{{ data.file.url }}" type="video/mp4"> </source>
+            </video>
+        {% endif %}
+      </div>
+
+      <!-- Basic Bootstrap Table -->
+      <div class="card">
+        <div class="text-nowrap">
+          <table class="table">
+            <tr>
+              <th class="responsive-wrap">Name</th>
+              <th class="h-100">:</th>
+              <td>{{ data.name }}</td>
+            </tr>
+            <tr>
+              <th class="responsive-wrap">camera</th>
+              <th class="h-100">:</th>
+              <td>{{ data.camera.name }}</td>
+            </tr>
+            <tr>
+              <th class="responsive-wrap">Description</th>
+              <th class="h-100">:</th>
+              <td>{{ data.description }}</td>
+            </tr>
+            <tr>
+              <th class="responsive-wrap">Is From Google Drive</th>
+              <th class="h-100">:</th>
+              <td>{{ data.is_from_gdrive }}</td>
+            </tr>
+            {% if data.url %}
+              <tr>
+                <th class="responsive-wrap">Url Googledrive</th>
+                <th class="h-100">:</th>
+                <td>{{ data.url }}</td>
+              </tr>
+            {% endif %}
+            <tr>
+              <th class="responsive-wrap">created</th>
+              <th class="h-100">:</th>
+              <td>{{ data.created }}</td>
+            </tr>
+            <tr>
+              <th class="responsive-wrap">updated</th>
+              <th class="h-100">:</th>
+              <td>{{ data.updated }}</td>
+            </tr>
+            <tr>
+              <th class="responsive-wrap">Search Keyword</th>
+              <th class="h-100">:</th>
+              <td>{{ data.search_keyword }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!--/ Basic Bootstrap Table -->
+    </div>
+    <!-- / Content -->
+    <div class="content-backdrop fade"></div>
+  </div>
+{% endblock %}

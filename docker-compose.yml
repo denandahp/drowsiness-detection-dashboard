@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+    adbro-test:
+        #Use Build if in local
+        #Use image if in Production
+        # build:
+        #     context: .
+        #     dockerfile: Dockerfile
+        image: denandahp/adbro-test:latest
+        container_name: adbro-test
+        # env_file: .env
+        # environment:
+        #   WAIT_HOSTS: postgres:5432
+        networks:
+            - adbro-networks
+        ports:
+            - 8000:8000
+        #Use Volume if in local & comment if in production
+        # volumes:
+        #     - .:/code
+
+networks:
+   adbro-networks:
+
+    

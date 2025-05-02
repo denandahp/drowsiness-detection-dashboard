@@ -1,0 +1,121 @@
+{% extends "layout/base.html" %}
+{% load static %}
+{% load querystring %}
+
+{% block title %}
+    Index {{ title }}
+{% endblock %}
+
+{% block content %}
+  <div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <div class="page-title mb-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <h4 class="fw-bold py-3 mb-0"><span class="text-muted fw-light">Tables /</span> {{ title }}</h4>
+            <a href="{% url 'dashboards:files:add_livestreaming' %}">
+              <button class="btn btn-primary mx-1"><em class="fa fa-plus me-2"></em>Add {{ title }}</button>
+            </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 mb-4">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search...."
+              aria-describedby="id-button-search"
+              id="id-input-search"
+            />
+            <button class="btn btn-primary" type="button" id="id-button-search" onclick=""><i class="bx bx-search-alt-2"></i></button>
+          </div>
+        </div>
+        <div class="col-sm-1 mb-4 btn-group">
+          <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> Urutkan </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" data-value="-updated" onclick="orderBySelect(this)" href="#">Terakhir diupdate</a></li>
+            <li><a class="dropdown-item" data-value="updated" onclick="orderBySelect(this)" href="#">Terakhir dibuat</a></li>
+            <li><a class="dropdown-item" data-value="name" onclick="orderBySelect(this)" href="#">Nama: A - Z</a></li>
+            <li><a class="dropdown-item" data-value="-name" onclick="orderBySelect(this)" href="#">Nama: Z - A</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Basic Bootstrap Table -->
+          <div class="card">
+            <div class="text-nowrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Name</th> 
+                    <th>Updated</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                  {% if not objects %}
+                    <tr>
+                        <td class="text-center" colspan="4">Tidak ada data pada tabel</td>
+                    </tr>
+                  {% else %}
+                    {% for data in objects %}        
+                    <tr>
+                        <td><a href="{% url 'dashboards:files:detail_files' id=data.id %}">{{ data.name }}</a></td>
+                        <td>{{ data.updated }}</td>
+                        <td>{{ data.get_type_display }}</td>
+                        <td>
+                          <div class="d-flex">
+                              <a href="{% url 'dashboards:files:detail_files' id=data.id %}">
+                                  <button class="btn btn-light-primary btn-sm"><i class="bx bx-detail"></i></button>
+                              </a>
+                              <a href="{% url 'dashboards:files:edit_livestreaming' id=data.id %}">
+                                  <button class="btn btn-light-success btn-sm mx-1"><i class="bx bx-edit-alt"></i></button>
+                              </a>
+                              <button type="button" class="btn btn-light-success btn-sm" data-bs-toggle="modal" data-bs-target="#id-delete-modal">
+                                <i class="bx bx-trash"></i>
+                              </button>
+                              {% include "dashboards/files/modal_delete.html" with data=data %}
+                          </div>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  {% endif %}
+                </tbody>
+              </table>
+              {% include "partials/pagination.html" %}
+            </div>
+          </div>
+          <!--/ Basic Bootstrap Table -->
+        </div>
+      </div>
+    </div>
+    <!-- / Content -->
+    <div class="content-backdrop fade"></div>
+
+    <script type="text/javascript" src="{% static "assets/js/helpers.js" %}"></script>
+    <script type="text/javascript">
+      let url_search = "{% url 'dashboards:files:index_livestreaming' %}"
+      const q = "{{ filters|get:'q' }}"  === 'None' ? '' : "{{ filters|get:'q' }}"
+      const orderby = "{{ filters|get:'orderby' }}" === 'None' ? '' : "{{ filters|get:'orderby' }}"
+
+      const params = new URLSearchParams({q, orderby})
+
+      function orderBySelect(data){
+        const value = data.dataset.value ? data.dataset.value : null
+        params.set('orderby', data.dataset.value)
+        window.location = `${url_search}?${params.toString()}`
+      }
+
+      const searchButton = document.getElementById('id-button-search')
+      searchButton.addEventListener('click', function() {
+        const search = document.getElementById('id-input-search').value
+        params.set('q', search)
+        window.location = `${url_search}?${params.toString()}`
+      })
+    </script>
+  </div>
+{% endblock %}

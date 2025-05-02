@@ -1,0 +1,63 @@
+.pagination {
+    @each $key, $value in $theme-colors {
+        &.pagination-#{$key} {
+            .page-item.active {
+                .page-link {
+                    background-color: $value;
+                    border-color: $value;
+                    box-shadow: 0 2px 5px rgba($value,.3);
+                }
+            }
+        }
+    }
+}
+.page-next-prev{
+    .page-link{
+        color: $black;
+    }
+}
+.page-item {
+    margin-right: .4rem;
+    
+    &:not(.active) {
+        .page-link {
+            &:hover {
+                color: $black
+            }
+        }
+    }
+    i, svg {
+        font-size: 13px;
+        width: 13px;
+        height: 13px;
+    }
+    .page-link {
+        border: none;
+        font-size: .875rem;
+
+        svg{
+            color: $primary;
+        }
+        &:focus {
+            box-shadow: none;
+        }
+    }
+    &:last-child {
+        margin-right: 0;
+        margin-left: 0;
+    }
+}
+.pagination-custom{
+    .page-item{
+        margin-right: .4rem;
+        &:last-child {
+            margin-right: .4rem;
+            margin-left: 0;
+        }
+    }
+}
+
+.page-item-disabled{
+    cursor: not-allowed;
+    opacity: 0.7;
+}

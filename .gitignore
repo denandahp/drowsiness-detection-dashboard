@@ -1,0 +1,28 @@
+# Packaging
+*.pyc
+*__pycache__*
+__pycache__
+/__pycache__
+/drowsiness_detection/__pycache__
+/drowsiness_detection/__pycache__/
+/drowsiness_detection/*__pycache__
+__pycache__/
+*.egg-info
+/dist/
+/build/
+
+# venv
+/bin/
+/lib/
+/share
+/pyvenv.cfg
+/pip-selfcheck.json
+venv/
+/drowsiness_detection/static
+.venv
+media
+conf
+config
+.env
+
+.DS_Store

@@ -1,0 +1,28 @@
+@media (max-width: 438px) {
+  .card {
+    height: 180px; } }
+
+.div-icon-total {
+  display: flex;
+  align-items: center; }
+  .div-icon-total .stats-icon {
+    width: 48px;
+    max-width: 48px;
+    min-width: 48px;
+    height: 38px;
+    min-height: 48px;
+    max-height: 48px; }
+  @media (max-width: 550px) {
+    .div-icon-total {
+      flex-direction: column;
+      align-items: flex-start; }
+      .div-icon-total h6 {
+        margin-top: 5px; } }
+
+.footer-card {
+  border-top: 1px solid #eee;
+  margin-top: 15px;
+  padding-top: 15px; }
+
+.streps {
+  height: 2rem; }
