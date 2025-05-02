@@ -9,7 +9,7 @@
 1. clone the repository.
 
    ```
-   https://github.com/rinofazar/drowsiness_detection-dashboard.git/
+   https://github.com/denandahp/drowsiness-detection-dashboard.git
    ```
 2. Create a [python virtual environment and activate it](https://docs.python.org/3/library/venv.html)
 3. Install dependencies:
